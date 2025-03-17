@@ -4,17 +4,18 @@ import java.time.LocalDateTime;
 import java.util.Scanner;
 
 import com.mycalendar.CalendarManager;
+import com.mycalendar.events.TypeEvent;
 import com.mycalendar.user.User;
 
 public class EventInputHelper {
     private final Scanner scanner;
     private final DateTimeInputHelper dateTimeHelper;
-    private final CalendarManager calendarManager;
+    private final EventFactory eventFactory;
     
     public EventInputHelper(Scanner scanner, CalendarManager calendarManager) {
         this.scanner = scanner;
-        this.calendarManager = calendarManager;
         this.dateTimeHelper = new DateTimeInputHelper(scanner);
+        this.eventFactory = new EventFactory(calendarManager);
     }
     
     public void inputPersonalEvent(User user) {
@@ -24,8 +25,7 @@ public class EventInputHelper {
         LocalDateTime dateTime = dateTimeHelper.inputDateTime();
         int duree = dateTimeHelper.inputDuration();
         
-        calendarManager.ajouterEvent("RDV_PERSONNEL", titre, user.getUsername(),
-                dateTime, duree, "", "", 0);
+        eventFactory.createPersonalEvent(titre, user.getUsername(), dateTime, duree);
         
         System.out.println("Événement ajouté.");
     }
@@ -49,8 +49,7 @@ public class EventInputHelper {
             System.out.println("Ajouter un autre participant ? (oui / non)");
         }
         
-        calendarManager.ajouterEvent("REUNION", titre, user.getUsername(),
-                dateTime, duree, lieu, participants, 0);
+        eventFactory.createMeetingEvent(titre, user.getUsername(), dateTime, duree, lieu, participants);
         
         System.out.println("Événement ajouté.");
     }
@@ -62,8 +61,7 @@ public class EventInputHelper {
         LocalDateTime dateTime = dateTimeHelper.inputDateTime();
         int frequence = dateTimeHelper.inputFrequency();
         
-        calendarManager.ajouterEvent("PERIODIQUE", titre, user.getUsername(),
-                dateTime, 0, "", "", frequence);
+        eventFactory.createPeriodicEvent(titre, user.getUsername(), dateTime, frequence);
         
         System.out.println("Événement ajouté.");
     }
