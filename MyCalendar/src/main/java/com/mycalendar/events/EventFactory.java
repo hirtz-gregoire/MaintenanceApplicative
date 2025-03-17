@@ -32,7 +32,7 @@ public class EventFactory {
      * @param frequencyDays La fréquence de l'événement en jours (pour les événements périodiques)
      * @return L'événement créé
      */
-    public IEvent createEvent(TypeEvent type, String title, String owner, LocalDateTime startDate, 
+    public Event createEvent(TypeEvent type, String title, String owner, LocalDateTime startDate, 
                              int durationMinutes, String place, String participants, int frequencyDays) {
         EventCreator creator = creators.get(type);
         if (creator == null) {
@@ -54,7 +54,7 @@ public class EventFactory {
      * @param frequencyDays La fréquence de l'événement en jours (pour les événements périodiques)
      * @return L'événement créé
      */
-    public IEvent createEvent(String type, String title, String owner, LocalDateTime startDate, 
+    public Event createEvent(String type, String title, String owner, LocalDateTime startDate, 
                              int durationMinutes, String place, String participants, int frequencyDays) {
         try {
             TypeEvent typeEvent = TypeEvent.valueOf(type);
@@ -64,18 +64,18 @@ public class EventFactory {
         }
     }
     
-    private IEvent createPersonalEvent(String title, String owner, LocalDateTime startDate, 
+    private Event createPersonalEvent(String title, String owner, LocalDateTime startDate, 
                                      int durationMinutes, String place, String participants, int frequencyDays) {
         return new PersonalEvent(title, owner, new DateEvent(startDate), new DurationEvent(durationMinutes));
     }
     
-    private IEvent createMeetingEvent(String title, String owner, LocalDateTime startDate, 
+    private Event createMeetingEvent(String title, String owner, LocalDateTime startDate, 
                                     int durationMinutes, String place, String participants, int frequencyDays) {
         return new MeetingEvent(title, owner, new DateEvent(startDate), new DurationEvent(durationMinutes), 
                                place, participants);
     }
     
-    private IEvent createPeriodicEvent(String title, String owner, LocalDateTime startDate, 
+    private Event createPeriodicEvent(String title, String owner, LocalDateTime startDate, 
                                      int durationMinutes, String place, String participants, int frequencyDays) {
         return new PeriodicEvent(title, owner, new DateEvent(startDate), frequencyDays);
     }
@@ -85,7 +85,7 @@ public class EventFactory {
      */
     @FunctionalInterface
     private interface EventCreator {
-        IEvent create(String title, String owner, LocalDateTime startDate, int durationMinutes, 
+        Event create(String title, String owner, LocalDateTime startDate, int durationMinutes, 
                      String place, String participants, int frequencyDays);
     }
 }

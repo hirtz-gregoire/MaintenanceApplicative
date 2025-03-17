@@ -21,7 +21,7 @@ public class PeriodicEvent extends AbstractEvent {
     }
     
     @Override
-    public boolean conflictsWith(IEvent other) {
+    public boolean conflictsWith(Event other) {
         // Les événements périodiques ne sont pas considérés comme étant en conflit avec d'autres événements
         return false;
     }

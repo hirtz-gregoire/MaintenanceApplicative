@@ -3,7 +3,7 @@ package com.mycalendar.events;
 /**
  * Classe abstraite implémentant les fonctionnalités communes à tous les types d'événements.
  */
-public abstract class AbstractEvent implements IEvent {
+public abstract class AbstractEvent implements Event {
     private final EventId id;
     private final TitleEvent title;
     private final OwnerEvent owner;
@@ -53,9 +53,10 @@ public abstract class AbstractEvent implements IEvent {
     }
     
     @Override
-    public boolean conflictsWith(IEvent other) {
-        // Par défaut, deux événements sont en conflit si leurs périodes se chevauchent
-        return !getStartDate().isAfter(other.getEndDate()) && !getEndDate().isBefore(other.getStartDate());
+    public boolean conflictsWith(Event other) {
+        // Deux événements sont en conflit si leurs périodes se chevauchent
+        // Mais ils ne sont pas en conflit si la fin de l'un est égale au début de l'autre
+        return getStartDate().isBefore(other.getEndDate()) && getEndDate().isAfter(other.getStartDate());
     }
     
     @Override

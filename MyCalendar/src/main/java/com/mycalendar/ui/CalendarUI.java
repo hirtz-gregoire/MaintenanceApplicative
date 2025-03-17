@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.mycalendar.CalendarManager;
-import com.mycalendar.events.IEvent;
+import com.mycalendar.events.Event;
 import com.mycalendar.user.User;
 
 /**
@@ -100,12 +100,12 @@ public class CalendarUI {
      * Affiche une liste d'événements.
      * @param evenements La liste d'événements à afficher
      */
-    private void displayEventList(List<IEvent> evenements) {
+    private void displayEventList(List<Event> evenements) {
         if (evenements.isEmpty()) {
             System.out.println("Aucun événement trouvé pour cette période.");
         } else {
             System.out.println("Événements trouvés : ");
-            for (IEvent e : evenements) {
+            for (Event e : evenements) {
                 System.out.println("- " + e.description());
             }
         }

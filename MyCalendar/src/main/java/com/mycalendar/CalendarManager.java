@@ -10,10 +10,10 @@ import java.util.stream.Collectors;
 import com.mycalendar.events.DateEvent;
 import com.mycalendar.events.EventFactory;
 import com.mycalendar.events.EventId;
-import com.mycalendar.events.IEvent;
+import com.mycalendar.events.Event;
 
 public class CalendarManager {
-    private final Map<EventId, IEvent> events;
+    private final Map<EventId, Event> events;
     private final EventFactory eventFactory;
 
     public CalendarManager() {
@@ -25,7 +25,7 @@ public class CalendarManager {
      * Ajoute un événement au calendrier.
      * @param event L'événement à ajouter
      */
-    public void ajouterEvent(IEvent event) {
+    public void ajouterEvent(Event event) {
         events.put(event.getId(), event);
     }
 
@@ -42,7 +42,7 @@ public class CalendarManager {
      */
     public void ajouterEvent(String type, String title, String proprietaire, LocalDateTime dateDebut, int dureeMinutes,
                              String lieu, String participants, int frequenceJours) {
-        IEvent event = eventFactory.createEvent(type, title, proprietaire, dateDebut, dureeMinutes, lieu, participants, frequenceJours);
+        Event event = eventFactory.createEvent(type, title, proprietaire, dateDebut, dureeMinutes, lieu, participants, frequenceJours);
         ajouterEvent(event);
     }
 
@@ -52,7 +52,7 @@ public class CalendarManager {
      * @param fin La date de fin de la période
      * @return La liste des événements dans la période
      */
-    public List<IEvent> eventsDansPeriode(LocalDateTime debut, LocalDateTime fin) {
+    public List<Event> eventsDansPeriode(LocalDateTime debut, LocalDateTime fin) {
         DateEvent debutEvent = new DateEvent(debut);
         DateEvent finEvent = new DateEvent(fin);
         
@@ -67,7 +67,7 @@ public class CalendarManager {
      * @param e2 Le second événement
      * @return true s'il y a un conflit, false sinon
      */
-    public boolean conflit(IEvent e1, IEvent e2) {
+    public boolean conflit(Event e1, Event e2) {
         return e1.conflictsWith(e2);
     }
 
@@ -75,7 +75,7 @@ public class CalendarManager {
      * Affiche tous les événements du calendrier.
      */
     public void afficherEvenements() {
-        for (IEvent e : events.values()) {
+        for (Event e : events.values()) {
             System.out.println(e.description());
         }
     }
@@ -94,7 +94,7 @@ public class CalendarManager {
      * @param event L'événement à vérifier
      * @return La liste des événements en conflit
      */
-    public List<IEvent> evenementsEnConflit(IEvent event) {
+    public List<Event> evenementsEnConflit(Event event) {
         return events.values().stream()
                 .filter(e -> !e.equals(event) && e.conflictsWith(event))
                 .collect(Collectors.toList());
@@ -105,7 +105,7 @@ public class CalendarManager {
      * @param event L'événement à vérifier
      * @return true si l'événement est en conflit, false sinon
      */
-    public boolean estEnConflit(IEvent event) {
+    public boolean estEnConflit(Event event) {
         return !evenementsEnConflit(event).isEmpty();
     }
     
@@ -113,7 +113,7 @@ public class CalendarManager {
      * Retourne tous les événements du calendrier.
      * @return La liste de tous les événements
      */
-    public List<IEvent> getAllEvents() {
+    public List<Event> getAllEvents() {
         return new ArrayList<>(events.values());
     }
 }

@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import com.mycalendar.CalendarManager;
 import com.mycalendar.events.DateEvent;
 import com.mycalendar.events.DurationEvent;
-import com.mycalendar.events.IEvent;
+import com.mycalendar.events.Event;
 import com.mycalendar.events.MeetingEvent;
 import com.mycalendar.events.PeriodicEvent;
 import com.mycalendar.events.PersonalEvent;
@@ -29,7 +29,7 @@ public class EventFactory {
      * @param duration La durée de l'événement en minutes
      */
     public void createPersonalEvent(String title, String owner, LocalDateTime dateTime, int duration) {
-        IEvent event = new PersonalEvent(title, owner, new DateEvent(dateTime), new DurationEvent(duration));
+        Event event = new PersonalEvent(title, owner, new DateEvent(dateTime), new DurationEvent(duration));
         calendarManager.ajouterEvent(event);
     }
     
@@ -43,7 +43,7 @@ public class EventFactory {
      * @param participants Les participants à la réunion
      */
     public void createMeetingEvent(String title, String owner, LocalDateTime dateTime, int duration, String place, String participants) {
-        IEvent event = new MeetingEvent(title, owner, new DateEvent(dateTime), new DurationEvent(duration), place, participants);
+        Event event = new MeetingEvent(title, owner, new DateEvent(dateTime), new DurationEvent(duration), place, participants);
         calendarManager.ajouterEvent(event);
     }
     
@@ -55,7 +55,7 @@ public class EventFactory {
      * @param frequency La fréquence de l'événement en jours
      */
     public void createPeriodicEvent(String title, String owner, LocalDateTime dateTime, int frequency) {
-        IEvent event = new PeriodicEvent(title, owner, new DateEvent(dateTime), frequency);
+        Event event = new PeriodicEvent(title, owner, new DateEvent(dateTime), frequency);
         calendarManager.ajouterEvent(event);
     }
     
