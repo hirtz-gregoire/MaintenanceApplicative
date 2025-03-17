@@ -206,7 +206,6 @@ public class Main {
                         
                         String participants = utilisateur;
                         
-                        boolean encore = true;
                         System.out.println("Ajouter un participant ? (oui / non)");
                         while (scanner.nextLine().equals("oui"))
                         {
@@ -250,6 +249,7 @@ public class Main {
                         continuer = scanner.nextLine().trim().equalsIgnoreCase("oui");
 
                         utilisateur = null;
+                        scanner.close();
                 }
             }
         }

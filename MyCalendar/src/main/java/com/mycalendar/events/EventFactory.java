@@ -3,7 +3,6 @@ package com.mycalendar.events;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
 
 /**
  * Factory pour créer des événements en fonction de leur type.
