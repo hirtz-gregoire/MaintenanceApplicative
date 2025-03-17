@@ -1,41 +1,17 @@
 package com.mycalendar;
 
-import java.util.Scanner;
+import com.mycalendar.ui.Application;
 
-import com.mycalendar.ui.AuthUI;
-import com.mycalendar.ui.CalendarUI;
-import com.mycalendar.user.User;
-import com.mycalendar.user.UserManager;
-
+/**
+ * Classe principale de l'application.
+ */
 public class Main {
     
+    /**
+     * Point d'entrée de l'application.
+     * @param args Arguments de la ligne de commande (non utilisés)
+     */
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        CalendarManager calendarManager = new CalendarManager();
-        UserManager userManager = new UserManager();
-        
-        CalendarUI calendarUI = new CalendarUI(scanner, calendarManager);
-        AuthUI authUI = new AuthUI(scanner, userManager, calendarUI);
-        
-        try {
-            // Boucle prncipale de l'application
-            while (true) {
-                User currentUser = null;
-                while (currentUser == null) {
-                    currentUser = authUI.displayAuthMenu();
-                }
-                
-                boolean continuer = true;
-                while (continuer && currentUser != null) {
-                    continuer = calendarUI.displayMainMenu(currentUser);
-                    
-                    if (!continuer) {
-                        currentUser = null;
-                    }
-                }
-            }
-        } finally {
-            scanner.close();
-        }
+        new Application().run();
     }
 }

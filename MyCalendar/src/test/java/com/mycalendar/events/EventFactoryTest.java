@@ -7,8 +7,6 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.mycalendar.events.EventFactory;
-
 class EventFactoryTest {
     
     private EventFactory eventFactory;
