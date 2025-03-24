@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
 import java.util.function.Function;
-import java.util.function.Predicate;
 
 import com.mycalendar.CalendarManager;
 import com.mycalendar.user.User;
@@ -98,5 +97,41 @@ public class EventInputHelper {
         eventFactory.createPeriodicEvent(titre, user.getUsername(), dateTime, frequence);
         
         System.out.println("Événement ajouté.");
+    }
+    
+    /**
+     * Demande à l'utilisateur de saisir une tâche.
+     * @param user L'utilisateur qui crée l'événement
+     */
+    public void inputTaskEvent(User user) {
+        System.out.print("Titre de la tâche : ");
+        String titre = scanner.nextLine();
+        
+        LocalDateTime deadline = dateTimeHelper.inputDateTime();
+        
+        System.out.print("Priorité (BASSE, MOYENNE, HAUTE) : ");
+        String priorite = scanner.nextLine().toUpperCase();
+        
+        eventFactory.createTaskEvent(titre, user.getUsername(), deadline, priorite);
+        
+        System.out.println("Tâche ajoutée.");
+    }
+    
+    /**
+     * Demande à l'utilisateur de saisir un rappel.
+     * @param user L'utilisateur qui crée l'événement
+     */
+    public void inputReminderEvent(User user) {
+        System.out.print("Titre du rappel : ");
+        String titre = scanner.nextLine();
+        
+        LocalDateTime dateTime = dateTimeHelper.inputDateTime();
+        
+        System.out.print("Message : ");
+        String message = scanner.nextLine();
+        
+        eventFactory.createReminderEvent(titre, user.getUsername(), dateTime, message);
+        
+        System.out.println("Rappel ajouté.");
     }
 }

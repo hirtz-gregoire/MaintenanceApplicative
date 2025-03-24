@@ -3,7 +3,6 @@ package com.mycalendar.ui;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
-import java.util.function.Supplier;
 
 import com.mycalendar.CalendarManager;
 import com.mycalendar.events.Event;

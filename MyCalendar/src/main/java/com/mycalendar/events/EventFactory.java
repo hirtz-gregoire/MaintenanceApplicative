@@ -18,6 +18,8 @@ public class EventFactory {
         creators.put(TypeEvent.RDV_PERSONNEL, this::createPersonalEvent);
         creators.put(TypeEvent.REUNION, this::createMeetingEvent);
         creators.put(TypeEvent.PERIODIQUE, this::createPeriodicEvent);
+        creators.put(TypeEvent.TASK, this::createTaskEvent);
+        creators.put(TypeEvent.RAPPEL, this::createReminderEvent);
     }
     
     /**
@@ -78,6 +80,18 @@ public class EventFactory {
     private Event createPeriodicEvent(String title, String owner, LocalDateTime startDate, 
                                      int durationMinutes, String place, String participants, int frequencyDays) {
         return new PeriodicEvent(title, owner, new DateEvent(startDate), frequencyDays);
+    }
+    
+    private Event createTaskEvent(String title, String owner, LocalDateTime startDate, 
+                                 int durationMinutes, String place, String participants, int frequencyDays) {
+        // Pour les tâches, on utilise le paramètre place comme priorité
+        return new TaskEvent(title, owner, new DateEvent(startDate), place);
+    }
+    
+    private Event createReminderEvent(String title, String owner, LocalDateTime startDate, 
+                                     int durationMinutes, String place, String participants, int frequencyDays) {
+        // Pour les rappels, on utilise le paramètre place comme message
+        return new ReminderEvent(title, owner, new DateEvent(startDate), place);
     }
     
     /**

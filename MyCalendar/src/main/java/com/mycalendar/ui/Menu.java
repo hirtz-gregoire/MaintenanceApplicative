@@ -37,7 +37,7 @@ public class Menu<T> {
      * @return Le menu
      */
     public Menu<T> addOption(String key, String description, MenuOption<T> option) {
-        options.put(key, option);
+        options.put(key, new MenuOption<>(description, option::execute));
         return this;
     }
     
@@ -66,6 +66,6 @@ public class Menu<T> {
      * @return La description de l'option
      */
     private String getOptionDescription(String key) {
-        return key;
+        return options.get(key).getDescription();
     }
 }

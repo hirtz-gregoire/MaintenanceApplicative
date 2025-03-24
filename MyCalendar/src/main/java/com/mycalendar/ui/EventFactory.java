@@ -9,6 +9,8 @@ import com.mycalendar.events.Event;
 import com.mycalendar.events.MeetingEvent;
 import com.mycalendar.events.PeriodicEvent;
 import com.mycalendar.events.PersonalEvent;
+import com.mycalendar.events.ReminderEvent;
+import com.mycalendar.events.TaskEvent;
 import com.mycalendar.events.TypeEvent;
 
 /**
@@ -60,6 +62,30 @@ public class EventFactory {
     }
     
     /**
+     * Crée une tâche et l'ajoute au calendrier.
+     * @param title Le titre de la tâche
+     * @param owner Le propriétaire de la tâche
+     * @param deadline La date limite de la tâche
+     * @param priority La priorité de la tâche
+     */
+    public void createTaskEvent(String title, String owner, LocalDateTime deadline, String priority) {
+        Event event = new TaskEvent(title, owner, new DateEvent(deadline), priority);
+        calendarManager.ajouterEvent(event);
+    }
+    
+    /**
+     * Crée un rappel et l'ajoute au calendrier.
+     * @param title Le titre du rappel
+     * @param owner Le propriétaire du rappel
+     * @param dateTime La date et l'heure du rappel
+     * @param message Le message du rappel
+     */
+    public void createReminderEvent(String title, String owner, LocalDateTime dateTime, String message) {
+        Event event = new ReminderEvent(title, owner, new DateEvent(dateTime), message);
+        calendarManager.ajouterEvent(event);
+    }
+    
+    /**
      * Crée un événement en fonction de son type et l'ajoute au calendrier.
      * @param type Le type d'événement
      * @param title Le titre de l'événement
@@ -80,6 +106,12 @@ public class EventFactory {
                 break;
             case PERIODIQUE:
                 createPeriodicEvent(title, owner, dateTime, frequency);
+                break;
+            case TASK:
+                createTaskEvent(title, owner, dateTime, place); // Pour les tâches, on utilise le paramètre place comme priorité
+                break;
+            case RAPPEL:
+                createReminderEvent(title, owner, dateTime, place); // Pour les rappels, on utilise le paramètre place comme message
                 break;
         }
     }

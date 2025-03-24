@@ -3,7 +3,6 @@ package com.mycalendar.ui;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.function.Consumer;
 
 import com.mycalendar.events.TypeEvent;
 import com.mycalendar.user.User;
@@ -38,7 +37,9 @@ public class EventTypeMenu {
         return DescriptionProvider.<TypeEvent>create(type -> "événement")
                 .addDescription(TypeEvent.RDV_PERSONNEL, "rendez-vous personnel")
                 .addDescription(TypeEvent.REUNION, "réunion")
-                .addDescription(TypeEvent.PERIODIQUE, "événement périodique");
+                .addDescription(TypeEvent.PERIODIQUE, "événement périodique")
+                .addDescription(TypeEvent.TASK, "tâche")
+                .addDescription(TypeEvent.RAPPEL, "rappel");
     }
     
     /**
@@ -52,6 +53,8 @@ public class EventTypeMenu {
         types.add(TypeEvent.RDV_PERSONNEL);
         types.add(TypeEvent.REUNION);
         types.add(TypeEvent.PERIODIQUE);
+        types.add(TypeEvent.TASK);
+        types.add(TypeEvent.RAPPEL);
         
         for (int i = 0; i < types.size(); i++) {
             TypeEvent type = types.get(i);
@@ -94,13 +97,19 @@ public class EventTypeMenu {
      * @param user L'utilisateur connecté
      */
     public void executeAction(TypeEvent type, User user) {
-        new EventTypeAction(
-            type,
-            user,
-            TypeEvent.RDV_PERSONNEL, () -> eventInputHelper.inputPersonalEvent(user),
-            TypeEvent.REUNION, () -> eventInputHelper.inputMeetingEvent(user),
-            TypeEvent.PERIODIQUE, () -> eventInputHelper.inputPeriodicEvent(user)
-        ).execute();
+        if (type == TypeEvent.TASK) {
+            eventInputHelper.inputTaskEvent(user);
+        } else if (type == TypeEvent.RAPPEL) {
+            eventInputHelper.inputReminderEvent(user);
+        } else {
+            new EventTypeAction(
+                type,
+                user,
+                TypeEvent.RDV_PERSONNEL, () -> eventInputHelper.inputPersonalEvent(user),
+                TypeEvent.REUNION, () -> eventInputHelper.inputMeetingEvent(user),
+                TypeEvent.PERIODIQUE, () -> eventInputHelper.inputPeriodicEvent(user)
+            ).execute();
+        }
     }
     
     /**
@@ -108,7 +117,6 @@ public class EventTypeMenu {
      */
     private static class EventTypeAction {
         private final TypeEvent type;
-        private final User user;
         private final TypeEvent type1;
         private final Runnable action1;
         private final TypeEvent type2;
@@ -119,7 +127,7 @@ public class EventTypeMenu {
         /**
          * Constructeur.
          * @param type Le type d'événement
-         * @param user L'utilisateur connecté
+         * @param user L'utilisateur connecté (non utilisé)
          * @param type1 Le premier type d'événement
          * @param action1 L'action associée au premier type d'événement
          * @param type2 Le deuxième type d'événement
@@ -129,7 +137,6 @@ public class EventTypeMenu {
          */
         public EventTypeAction(TypeEvent type, User user, TypeEvent type1, Runnable action1, TypeEvent type2, Runnable action2, TypeEvent type3, Runnable action3) {
             this.type = type;
-            this.user = user;
             this.type1 = type1;
             this.action1 = action1;
             this.type2 = type2;
