@@ -1,5 +1,8 @@
 package com.mycalendar.events;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Classe abstraite implémentant les fonctionnalités communes à tous les types d'événements.
  */
@@ -10,7 +13,13 @@ public abstract class AbstractEvent implements Event {
     private final DateEvent startDate;
     private final DurationEvent duration;
     
-    protected AbstractEvent(EventId id, TitleEvent title, OwnerEvent owner, DateEvent startDate, DurationEvent duration) {
+    @JsonCreator
+    protected AbstractEvent(
+            @JsonProperty("id") EventId id,
+            @JsonProperty("title") TitleEvent title,
+            @JsonProperty("owner") OwnerEvent owner,
+            @JsonProperty("startDate") DateEvent startDate,
+            @JsonProperty("duration") DurationEvent duration) {
         this.id = id;
         this.title = title;
         this.owner = owner;

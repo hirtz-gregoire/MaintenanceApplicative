@@ -1,5 +1,6 @@
 package com.mycalendar.ui;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 import com.mycalendar.CalendarManager;
@@ -25,6 +26,21 @@ public class Application {
         this.userManager = new UserManager();
         this.calendarUI = new CalendarUI(scanner, calendarManager);
         this.authUI = new AuthUI(scanner, userManager, calendarUI);
+        
+        // Charger les événements depuis le fichier par défaut
+        loadEventsFromDefaultFile();
+    }
+    
+    /**
+     * Charge les événements depuis le fichier par défaut.
+     */
+    private void loadEventsFromDefaultFile() {
+        try {
+            calendarManager.loadEventsFromDefaultFile();
+            System.out.println("Événements chargés depuis le fichier par défaut.");
+        } catch (IOException e) {
+            System.out.println("Aucun fichier d'événements trouvé. Un nouveau calendrier sera créé.");
+        }
     }
     
     /**

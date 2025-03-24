@@ -1,5 +1,7 @@
 package com.mycalendar.events;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Objects;
 
 /**
@@ -9,7 +11,8 @@ import java.util.Objects;
 public class TitleEvent {
     private final String value;
     
-    public TitleEvent(String title) {
+    @JsonCreator
+    public TitleEvent(@JsonProperty("value") String title) {
         if (title == null || title.trim().isEmpty()) {
             throw new IllegalArgumentException("Le titre ne peut pas être vide");
         }

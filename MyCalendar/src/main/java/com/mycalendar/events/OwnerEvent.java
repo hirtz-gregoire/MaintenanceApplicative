@@ -1,5 +1,7 @@
 package com.mycalendar.events;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Objects;
 
 /**
@@ -9,7 +11,8 @@ import java.util.Objects;
 public class OwnerEvent {
     private final String value;
     
-    public OwnerEvent(String owner) {
+    @JsonCreator
+    public OwnerEvent(@JsonProperty("value") String owner) {
         if (owner == null || owner.trim().isEmpty()) {
             throw new IllegalArgumentException("Le propriétaire ne peut pas être vide");
         }

@@ -1,9 +1,20 @@
 package com.mycalendar.events;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 /**
  * Interface représentant un événement dans le calendrier.
  * Cette interface définit les méthodes communes à tous les types d'événements.
  */
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = PersonalEvent.class, name = "RDV_PERSONNEL"),
+    @JsonSubTypes.Type(value = MeetingEvent.class, name = "REUNION"),
+    @JsonSubTypes.Type(value = PeriodicEvent.class, name = "PERIODIQUE"),
+    @JsonSubTypes.Type(value = TaskEvent.class, name = "TASK"),
+    @JsonSubTypes.Type(value = ReminderEvent.class, name = "RAPPEL")
+})
 public interface Event {
     
     /**

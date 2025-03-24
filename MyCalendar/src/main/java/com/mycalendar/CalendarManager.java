@@ -1,5 +1,7 @@
 package com.mycalendar;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,6 +13,7 @@ import com.mycalendar.events.DateEvent;
 import com.mycalendar.events.EventFactory;
 import com.mycalendar.events.EventId;
 import com.mycalendar.events.Event;
+import com.mycalendar.json.JsonUtils;
 
 public class CalendarManager {
     private final Map<EventId, Event> events;
@@ -27,6 +30,18 @@ public class CalendarManager {
      */
     public void ajouterEvent(Event event) {
         events.put(event.getId(), event);
+        saveEventsAutomatically();
+    }
+    
+    /**
+     * Sauvegarde automatiquement les événements après chaque modification.
+     */
+    private void saveEventsAutomatically() {
+        try {
+            saveEventsToDefaultFile();
+        } catch (IOException e) {
+            System.out.println("Erreur lors de la sauvegarde automatique : " + e.getMessage());
+        }
     }
 
     /**
@@ -86,7 +101,11 @@ public class CalendarManager {
      * @return true si l'événement a été supprimé, false s'il n'existait pas
      */
     public boolean supprimerEvent(EventId eventId) {
-        return events.remove(eventId) != null;
+        boolean result = events.remove(eventId) != null;
+        if (result) {
+            saveEventsAutomatically();
+        }
+        return result;
     }
     
     /**
@@ -115,5 +134,61 @@ public class CalendarManager {
      */
     public List<Event> getAllEvents() {
         return new ArrayList<>(events.values());
+    }
+    
+    /**
+     * Sauvegarde tous les événements du calendrier dans un fichier JSON.
+     * @param file Le fichier où sauvegarder les événements
+     * @throws IOException En cas d'erreur lors de la sauvegarde
+     */
+    public void saveEventsToJson(File file) throws IOException {
+        List<Event> eventList = getAllEvents();
+        JsonUtils.saveToFile(eventList, file);
+    }
+    
+    /**
+     * Charge les événements depuis un fichier JSON.
+     * @param file Le fichier contenant les événements
+     * @throws IOException En cas d'erreur lors du chargement
+     */
+    public void loadEventsFromJson(File file) throws IOException {
+        // Vider la liste actuelle d'événements
+        events.clear();
+        
+        try {
+            // Charger les événements depuis le fichier
+            List<Event> loadedEvents = JsonUtils.loadListFromFile(file, Event.class);
+            
+            // Ajouter les événements chargés sans déclencher de sauvegarde automatique
+            for (Event event : loadedEvents) {
+                events.put(event.getId(), event);
+            }
+            
+            System.out.println("Chargement réussi : " + loadedEvents.size() + " événements chargés.");
+        } catch (Exception e) {
+            System.out.println("Erreur lors du chargement des événements : " + e.getMessage());
+            e.printStackTrace();
+            throw e;
+        }
+    }
+    
+    /**
+     * Sauvegarde tous les événements du calendrier dans un fichier JSON par défaut.
+     * @throws IOException En cas d'erreur lors de la sauvegarde
+     */
+    public void saveEventsToDefaultFile() throws IOException {
+        File defaultFile = new File("calendar_events.json");
+        saveEventsToJson(defaultFile);
+    }
+    
+    /**
+     * Charge les événements depuis un fichier JSON par défaut.
+     * @throws IOException En cas d'erreur lors du chargement
+     */
+    public void loadEventsFromDefaultFile() throws IOException {
+        File defaultFile = new File("calendar_events.json");
+        if (defaultFile.exists()) {
+            loadEventsFromJson(defaultFile);
+        }
     }
 }

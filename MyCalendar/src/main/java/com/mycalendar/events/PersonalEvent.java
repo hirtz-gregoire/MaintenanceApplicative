@@ -1,11 +1,20 @@
 package com.mycalendar.events;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Classe représentant un rendez-vous personnel.
  */
 public class PersonalEvent extends AbstractEvent {
     
-    public PersonalEvent(EventId id, TitleEvent title, OwnerEvent owner, DateEvent startDate, DurationEvent duration) {
+    @JsonCreator
+    public PersonalEvent(
+            @JsonProperty("id") EventId id,
+            @JsonProperty("title") TitleEvent title,
+            @JsonProperty("owner") OwnerEvent owner,
+            @JsonProperty("startDate") DateEvent startDate,
+            @JsonProperty("duration") DurationEvent duration) {
         super(id, title, owner, startDate, duration);
     }
     

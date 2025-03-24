@@ -1,0 +1,41 @@
+  [ {
+  "id" : {
+    "value" : "15efd658-f15d-4754-87ce-a52d7c07e21e"
+  },
+  "title" : {
+    "value" : "RDV1"
+  },
+  "owner" : {
+    "value" : "Roger"
+  },
+  "startDate" : {
+    "dateTime" : "2025-06-01T12:00:00"
+  },
+  "duration" : {
+    "minutes" : 0
+  },
+  "type" : "RDV_PERSONNEL",
+  "endDate" : {
+    "dateTime" : "2025-06-01T12:00:00"
+  }
+}, {
+  "id" : {
+    "value" : "283a3867-7f85-440b-a0dc-2ad3981d3dff"
+  },
+  "title" : {
+    "value" : "RDV2"
+  },
+  "owner" : {
+    "value" : "Roger"
+  },
+  "startDate" : {
+    "dateTime" : "2026-12-12T23:12:00"
+  },
+  "duration" : {
+    "minutes" : 11
+  },
+  "type" : "RDV_PERSONNEL",
+  "endDate" : {
+    "dateTime" : "2026-12-12T23:23:00"
+  }
+} ]

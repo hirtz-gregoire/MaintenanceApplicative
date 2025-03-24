@@ -1,5 +1,7 @@
 package com.mycalendar.events;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Objects;
 
 /**
@@ -9,7 +11,8 @@ import java.util.Objects;
 public class DurationEvent {
     private final int minutes;
     
-    public DurationEvent(int minutes) {
+    @JsonCreator
+    public DurationEvent(@JsonProperty("minutes") int minutes) {
         if (minutes < 0) {
             throw new IllegalArgumentException("La durée ne peut pas être négative");
         }

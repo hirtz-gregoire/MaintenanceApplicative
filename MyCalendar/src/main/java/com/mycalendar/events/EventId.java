@@ -1,5 +1,7 @@
 package com.mycalendar.events;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -14,7 +16,8 @@ public class EventId {
         this(UUID.randomUUID().toString());
     }
     
-    public EventId(String id) {
+    @JsonCreator
+    public EventId(@JsonProperty("value") String id) {
         if (id == null || id.trim().isEmpty()) {
             throw new IllegalArgumentException("L'identifiant ne peut pas être vide");
         }

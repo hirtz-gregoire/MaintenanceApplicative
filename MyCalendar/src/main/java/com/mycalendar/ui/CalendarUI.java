@@ -1,5 +1,7 @@
 package com.mycalendar.ui;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
@@ -17,7 +19,8 @@ public class CalendarUI {
     private final DateTimeInputHelper dateTimeHelper;
     private final EventInputHelper eventInputHelper;
     private final EventTypeMenu eventTypeMenu;
-    private final Menu<Boolean> mainMenu;
+    private User currentUser;
+    private Menu<Boolean> mainMenu;
     private final Menu<Void> viewEventsMenu;
     
     /**
@@ -50,6 +53,8 @@ public class CalendarUI {
      * @return true si l'utilisateur souhaite continuer, false sinon
      */
     public boolean displayMainMenu(User user) {
+        this.currentUser = user;
+        this.mainMenu = createMainMenu();
         System.out.println("\nBonjour, " + user.getUsername());
         return mainMenu.display();
     }
@@ -65,7 +70,7 @@ public class CalendarUI {
                     return true;
                 }))
                 .addOption("2", "Ajouter un événement", MenuOption.of(() -> {
-                    eventTypeMenu.displayMenu(null);
+                    eventTypeMenu.displayMenu(currentUser);
                     return true;
                 }))
                 .addOption("3", "Se déconnecter", MenuOption.of(() -> {

@@ -64,8 +64,43 @@ J'ai suivi la démarche TDD en trois étapes :
 3. **Description spécifique** : Chaque ReminderEvent génère une description spécifique incluant le titre, le message et la date.
 4. **Suppression par identifiant** : Les ReminderEvent peuvent être supprimés par leur identifiant comme les autres types d'événements.
 
+## Fonctionnalités bonus implémentées
+
+### 1. Sérialisation/Désérialisation vers JSON (+1 point)
+
+J'ai implémenté une fonctionnalité complète de sérialisation/désérialisation JSON pour tous les types d'événements :
+
+- Ajout des dépendances Jackson dans le fichier pom.xml
+- Création d'une classe utilitaire `JsonUtils` qui fournit des méthodes pour :
+  - Sérialiser un événement ou une liste d'événements en JSON
+  - Désérialiser un événement ou une liste d'événements depuis JSON
+  - Sauvegarder des événements dans un fichier JSON
+  - Charger des événements depuis un fichier JSON
+- Création de tests unitaires pour valider le bon fonctionnement de la sérialisation/désérialisation
+
+Cette fonctionnalité permet de sauvegarder et restaurer l'état du calendrier, facilitant ainsi la persistance des données.
+
+### 2. Interface utilisateur minimale (+3 points)
+
+J'ai développé une interface utilisateur graphique complète en utilisant JavaFX :
+
+- Ajout des dépendances JavaFX dans le fichier pom.xml
+- Création d'une classe principale `CalendarApp` qui lance l'application
+- Implémentation d'un contrôleur `CalendarController` qui gère l'interaction avec l'utilisateur
+- Création d'un fichier FXML `CalendarView.fxml` qui définit la structure de l'interface
+
+L'interface utilisateur permet de :
+- Visualiser tous les événements dans une table
+- Ajouter de nouveaux événements de tous types (y compris le nouveau type ReminderEvent)
+- Supprimer des événements existants
+- Exporter et importer des événements au format JSON
+
+L'interface s'adapte dynamiquement au type d'événement sélectionné, affichant uniquement les champs pertinents pour ce type.
+
 ## Conclusion
 
 L'implémentation du nouveau type d'événement ReminderEvent a été réalisée avec succès en suivant strictement les principes du TDD et les contraintes imposées. Le code est maintenant plus robuste, maintenable et évolutif grâce à l'utilisation de Value Objects et du polymorphisme.
 
 Les tests unitaires garantissent le bon fonctionnement de la nouvelle fonctionnalité et son intégration harmonieuse avec le reste de l'application.
+
+Les fonctionnalités bonus (sérialisation JSON et interface utilisateur) ajoutent une valeur significative à l'application, la rendant plus pratique et conviviale pour l'utilisateur final.

@@ -1,5 +1,7 @@
 package com.mycalendar.events;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -10,7 +12,8 @@ import java.util.Objects;
 public class DateEvent {
     private final LocalDateTime dateTime;
     
-    public DateEvent(LocalDateTime dateTime) {
+    @JsonCreator
+    public DateEvent(@JsonProperty("dateTime") LocalDateTime dateTime) {
         this.dateTime = Objects.requireNonNull(dateTime, "La date et l'heure ne peuvent pas être nulles");
     }
     

@@ -15,7 +15,7 @@ public class EventTypeMenu {
     private final Scanner scanner;
     private final EventInputHelper eventInputHelper;
     private final DescriptionProvider<TypeEvent> descriptionProvider;
-    private final Menu<Boolean> eventTypeMenu;
+    private Menu<Boolean> eventTypeMenu;
     
     /**
      * Constructeur.
@@ -62,7 +62,7 @@ public class EventTypeMenu {
             String description = "Ajouter " + article + " " + descriptionProvider.getDescription(type);
             
             builder.addOption(String.valueOf(i + 1), description, MenuOption.of(() -> {
-                executeAction(type, null);
+                executeAction(type, currentUser);
                 return true;
             }));
         }
@@ -82,12 +82,17 @@ public class EventTypeMenu {
         return descriptionProvider.getDescription(type);
     }
     
+    // Variable pour stocker l'utilisateur courant
+    private User currentUser;
+    
     /**
      * Affiche le menu des types d'événements.
      * @param user L'utilisateur connecté
      * @return true si une action a été effectuée, false sinon
      */
     public boolean displayMenu(User user) {
+        this.currentUser = user;
+        this.eventTypeMenu = createEventTypeMenu();
         return eventTypeMenu.display();
     }
     
