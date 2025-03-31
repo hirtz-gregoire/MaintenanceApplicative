@@ -64,6 +64,41 @@ J'ai suivi la démarche TDD en trois étapes :
 3. **Description spécifique** : Chaque ReminderEvent génère une description spécifique incluant le titre, le message et la date.
 4. **Suppression par identifiant** : Les ReminderEvent peuvent être supprimés par leur identifiant comme les autres types d'événements.
 
+## Guide d'utilisation de l'application
+
+### Démarrage de l'application
+
+L'application peut être lancée de deux façons différentes :
+
+#### Mode Console (Interface textuelle)
+
+Pour lancer l'application en mode console :
+
+```bash
+mvn compile exec:java -Dexec.mainClass="com.mycalendar.Main"
+```
+
+Le mode console offre une interface textuelle interactive avec des menus pour :
+- Se connecter ou créer un compte
+- Ajouter différents types d'événements
+- Afficher les événements existants
+- Rechercher des événements par période
+- Supprimer des événements
+
+#### Mode JavaFX (Interface graphique)
+
+Pour lancer l'application avec l'interface graphique JavaFX :
+
+```bash
+mvn javafx:run
+```
+
+L'interface graphique JavaFX permet de :
+- Visualiser tous les événements dans un tableau
+- Ajouter de nouveaux événements de différents types
+- Supprimer des événements existants
+- Exporter et importer des événements au format JSON
+
 ## Fonctionnalités bonus implémentées
 
 ### 1. Sérialisation/Désérialisation vers JSON (+1 point)
